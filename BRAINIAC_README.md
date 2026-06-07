@@ -20,6 +20,23 @@ This repo is Zongyu Li et al.'s TumorCLIP, **unchanged**, with one extra compone
 
 The three deprecated files (`src/models/brainiac_encoder.py`, `src/models/brainiac_fusion.py`, `scripts/train_brainiac_fusion.py`) raise on import — they were my earlier reimplementation and are kept only to make the directory's history obvious.
 
+## Two ways to run
+
+The same training pipeline is available as either Jupyter notebooks **or** plain Python scripts — pick whichever you prefer.
+
+**Option 1: Python scripts (recommended for terminal / VS Code workflow).**
+
+```
+python train_single_modal.py --data_root data --brainiac_weights weights/brainiac/BrainIAC.ckpt --epochs 40
+python train_fusion.py        --data_root data --brainiac_weights weights/brainiac/BrainIAC.ckpt --epochs 15
+```
+
+Each script has `--help` with all available flags. The fusion script auto-enables `--shared_backbone` (halves GPU memory). Pass `--no_shared_backbone` to revert to Zongyu's two-copies design.
+
+**Option 2: Jupyter notebooks (preserves Zongyu's exact cell structure).**
+
+Open `BrainIAC_Enhanced_Single_Modal_Training.ipynb` and `BrainIAC_CLIP_Fusion_Model_Training.ipynb` in VS Code or Jupyter, pick a kernel, and run cells top-to-bottom. Same logic as the scripts above — just cell-by-cell.
+
 ## Setup
 
 ```

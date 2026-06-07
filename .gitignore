@@ -1,12 +1,4 @@
 best_models/
 *.pt
 *.pth
-.DS_Storeweights/
-data/
-results/
-__pycache__/
-*.pt
-*.ckpt
-*.pyc
-.ipynb_checkpoints/
 .DS_Store
