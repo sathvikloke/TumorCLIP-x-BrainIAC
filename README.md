@@ -1,3 +1,13 @@
+# TumorCLIP × BrainIAC
+
+Extension of Zongyu Li et al.'s TumorCLIP (ISMRM 2026) with a BrainIAC backbone (Tak et al., *Nature Neuroscience* 2026) dropped in where DenseNet121 used to be.
+
+**For setup, training, and the concept-intervention falsification test, see [BRAINIAC_README.md](./BRAINIAC_README.md).**
+
+The original TumorCLIP code is preserved unchanged below.
+
+---
+
 ## TumorCLIP
 
 This repository is the paper code release for TumorCLIP: Lightweight Vision–Language Fusion for Explainable MRI-Based Brain Tumor Classification
