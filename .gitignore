@@ -1,9 +1,4 @@
-__pycache__/
-   *.pyc
-   *.pt
-   data/
-   checkpoints/
-   wandb/
-   .DS_Store
-   .venv/
-   env/
+best_models/
+*.pt
+*.pth
+.DS_Store

@@ -1,98 +1,105 @@
-# TumorCLIP Reimplementation
+## TumorCLIP
 
-Faithful reimplementation of TumorCLIP (Jia et al., ISMRM 2026, *"TumorCLIP: Lightweight Vision-Language Fusion for Explainable MRI-Based Brain Tumor Classification"*).
+This repository is the paper code release for TumorCLIP: Lightweight Vision–Language Fusion for Explainable MRI-Based Brain Tumor Classification
 
-This is a clean baseline meant to serve Phase 1 of the TumorCLIP × BrainIAC project. The architecture is designed so the DenseNet121 backbone can be swapped for a foundation model (BrainIAC, UMBIF, Decipher-MR) with a single config change in Phase 2.
+doi: https://doi.org/10.64898/2026.03.11.26348155
 
-## What it implements
+Reproducibility is provided via **three Jupyter notebooks**; core modules live under `src/`.
 
-- DenseNet121 backbone (ImageNet-pretrained, fine-tuned on tumor data)
-- Frozen CLIP text encoder producing class-level text prototypes
-- Tip-Adapter-style late fusion combining image-only logits with text-prototype cosine-similarity logits
-- Fusion weight α = 0.3 (paper's reported optimum)
-- 6-class classification: Glioma, Meningioma, Normal, Neurocytoma, Other Lesions, Schwannoma
-- Dataset loader for the Kaggle "Brain Tumor MRI Images (17 Classes)" dataset with the 17→6 superclass mapping
-- Training loop with Adam, CosineAnnealingLR, early stopping, W&B logging
+## Project structure
 
-## Setup
+```text
+AI4BrainTumorDiagnosis-final/
+├── Enhanced_Single_Modal_Training.ipynb      # Train single-modal baselines from scratch and save best weights
+├── CLIP_Fusion_Model_Training.ipynb          # Train CLIP fusion model using single-modal weights
+├── Model_Evaluation_Visualization.ipynb      # Evaluation & visualization (confusion matrix, ROC, etc.)
+├── requirements.txt
+└── src/
+    ├── config/                               # Constants (class names, prompts, etc.)
+    ├── core/                                 # Utilities & logging (JSON saving, timing, etc.)
+    ├── data/                                 # Dataset/transform/dataloader factory
+    ├── docs/                                 # Formula-to-code mapping notes
+    ├── models/                               # Losses, DenseNet variants, single-modal model factory
+    ├── training/                             # Single-modal trainer and enhanced trainer
+    └── visualization/                        # Plotting and evaluation utilities
+```
+
+## Environment and installation
+
+- **Recommended Python**: 3.9+
+- **Install dependencies**:
 
 ```bash
-conda create -n tumorclip python=3.10 -y
-conda activate tumorclip
 pip install -r requirements.txt
 ```
 
-## Download the data
+- **Extra dependency for CLIP fusion**: `CLIP_Fusion_Model_Training.ipynb` imports `open_clip`. If it is not available in your environment, install `open-clip-torch`:
 
 ```bash
-# Get a Kaggle API key from https://www.kaggle.com/settings, save to ~/.kaggle/kaggle.json
-bash scripts/download_data.sh
+pip install open-clip-torch
 ```
 
-This pulls the dataset to `data/raw/` and runs the 17→6 consolidation script, producing `data/processed/train/` and `data/processed/test/`.
+## Dataset location and layout
 
-## Verify the install (30 seconds)
+Place the dataset under the project root at `data/` (same level as `src/`), following the `torchvision.datasets.ImageFolder` layout:
 
-Before downloading the dataset, confirm the code works end-to-end with synthetic data:
-
-```bash
-python -m tests.test_smoke
+```text
+data/
+├── train/
+│   ├── Glioma/
+│   ├── Meningioma/
+│   ├── NORMAL/
+│   ├── Neurocitoma/
+│   ├── Outros Tipos de Lesões/
+│   └── Schwannoma/
+└── test/
+    ├── Glioma/
+    ├── Meningioma/
+    ├── NORMAL/
+    ├── Neurocitoma/
+    ├── Outros Tipos de Lesões/
+    └── Schwannoma/
 ```
 
-This builds the prototype bank, runs a forward pass, builds a fake dataset, runs `evaluate()`, and runs `concept_intervention()`. If all 5 steps print PASS, every code path is wired up correctly. (This downloads ~150 MB of CLIP and DenseNet weights on first run.)
+Notes:
+- This repository **does not include the dataset**. Please obtain it from the paper/data source and place it in the directory structure above.
+- The notebooks default to `data/train` and `data/test`. If you store data elsewhere, update `DATA_TRAIN_PATH/DATA_TEST_PATH` or `train_dir/test_dir` in the corresponding notebook configuration cells.
 
-## Train the baseline
+## Reproducibility (recommended order)
 
-```bash
-python -m src.train --config configs/baseline.yaml
-```
+### 1) Single-modal training (produce the best DenseNet weights)
 
-Expected result on test split: ~97.5–98.5% accuracy (paper reports 98.5%). If you're within 2pp, replication is confirmed.
+Run `Enhanced_Single_Modal_Training.ipynb`.
 
-## Project layout
+Key outputs (examples):
+- `results/best_models/DenseNet121_Adam_lr0.0001_best.pth`
+- `results/training_logs/enhanced_single_modal_results.json`
 
-```
-tumorclip_repro/
-├── README.md
-├── requirements.txt
-├── configs/
-│   └── baseline.yaml          # DenseNet121 + TumorCLIP head config
-├── scripts/
-│   ├── download_data.sh       # Kaggle CLI download + 17→6 mapping
-│   └── consolidate_classes.py # 17→6 superclass mapping
-└── src/
-    ├── __init__.py
-    ├── prototypes.py          # Class descriptions + CLIP text encoding
-    ├── data.py                # PyTorch Dataset for processed Kaggle data
-    ├── model.py               # TumorCLIP module
-    ├── train.py               # Training loop
-    └── evaluate.py            # Metrics: accuracy, macro-F1, per-class recall
-```
+### 2) CLIP fusion training (depends on single-modal best weights)
 
-## Phase 2 hooks (BrainIAC swap)
+Run `CLIP_Fusion_Model_Training.ipynb`.
 
-The model is split into a `Backbone` class and a `TumorCLIPHead` class so you can swap the backbone without touching the head:
+By default, the notebook loads the single-modal weights from:
+- `results/best_models/DenseNet121_Adam_lr0.0001_best.pth`
 
-```python
-from src.model import TumorCLIPHead
-from brainiac import BrainIACBackbone  # to be added in Phase 2
+### 3) Evaluation and visualization
 
-backbone = BrainIACBackbone(pretrained=True, freeze=True)
-head = TumorCLIPHead(in_features=2048, n_classes=6, alpha=0.3)
-```
+Run `Model_Evaluation_Visualization.ipynb` to evaluate saved models and generate visualizations.
 
-The text-prototype generation in `prototypes.py` does not depend on the backbone and works identically across configs.
+## Output directory convention
 
-## Concept intervention (Phase 5)
+The following directories will be created automatically (if missing):
+- `results/`: experiment outputs and visualizations
+  - `results/best_models/`: best checkpoints (`.pth`)
+  - `results/training_logs/`: training logs and summary JSON
+  - `results/plots/` or `results/visualizations/`: figures (exact subfolder depends on the notebook/module)
 
-The text prototypes are loaded from `prototypes.py` as editable strings. To run a concept intervention experiment, edit a single token and re-run inference on the test set. See `prototypes.py` docstring for the protocol.
+
+## Notes
+
+- **GPU recommended**: training and fusion are strongly recommended to run on GPU; CPU will work but will be slow.
+
 
 ## Citation
 
-If you use this reimplementation, please cite the original TumorCLIP abstract:
-
-> Jia Y., Niu J., Li Z., Guo J. *TumorCLIP: Lightweight Vision-Language Fusion for Explainable MRI-Based Brain Tumor Classification.* ISMRM 2026, Abstract 401-02-001.
-
-## Status
-
-This is an *unofficial* reimplementation based on the published abstract. No code was released by the original authors as of [today's date]. Authors contacted at `zl3372@columbia.edu`.
+If you use this repository in your work, please cite the corresponding paper (we recommend adding BibTeX or `CITATION.cff` when publishing).
