@@ -105,7 +105,7 @@ class ViTBackboneNet(nn.Module):
                 if key.startswith("backbone."):
                     new_key = key[9:]  # len("backbone.") == 9
                     backbone_state_dict[new_key] = value
-            self.backbone.load_state_dict(backbone_state_dict, strict=True)
+            self.backbone.load_state_dict(backbone_state_dict, strict=False)
             print("Backbone weights loaded!!")
         elif simclr_ckpt_path:
             print(f"   WARNING: BrainIAC weights not found at {simclr_ckpt_path!r}; using random init.")
