@@ -1,0 +1,22 @@
+[
+  {
+    "label": "meaningful",
+    "class": "NORMAL",
+    "find": "normal",
+    "replace": "abnormal",
+    "n_positives": 126,
+    "mean_prob_drop": 0.0005275640287436545,
+    "median_prob_drop": 0.0002264082431793213,
+    "fraction_flipped": 0.0
+  },
+  {
+    "label": "control",
+    "class": "NORMAL",
+    "find": "brain",
+    "replace": "cerebral",
+    "n_positives": 126,
+    "mean_prob_drop": 8.080474071903154e-05,
+    "median_prob_drop": 3.5703182220458984e-05,
+    "fraction_flipped": 0.0
+  }
+]

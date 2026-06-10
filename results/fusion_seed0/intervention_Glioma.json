@@ -1,0 +1,22 @@
+[
+  {
+    "label": "meaningful",
+    "class": "Glioma",
+    "find": "glioma",
+    "replace": "schwannoma",
+    "n_positives": 298,
+    "mean_prob_drop": 0.0031649693846702576,
+    "median_prob_drop": 0.0010921061038970947,
+    "fraction_flipped": 0.003355704697986577
+  },
+  {
+    "label": "control",
+    "class": "Glioma",
+    "find": "showing",
+    "replace": "displaying",
+    "n_positives": 298,
+    "mean_prob_drop": 6.075953569961712e-05,
+    "median_prob_drop": 2.4080276489257812e-05,
+    "fraction_flipped": 0.0
+  }
+]

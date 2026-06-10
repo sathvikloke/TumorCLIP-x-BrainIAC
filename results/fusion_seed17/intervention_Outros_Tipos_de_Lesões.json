@@ -1,0 +1,22 @@
+[
+  {
+    "label": "meaningful",
+    "class": "Outros Tipos de Les\u00f5es",
+    "find": "lesions",
+    "replace": "tumors",
+    "n_positives": 54,
+    "mean_prob_drop": 0.00022681057453155518,
+    "median_prob_drop": 0.00014463067054748535,
+    "fraction_flipped": 0.0
+  },
+  {
+    "label": "control",
+    "class": "Outros Tipos de Les\u00f5es",
+    "find": "intracranial",
+    "replace": "external",
+    "n_positives": 54,
+    "mean_prob_drop": 0.0003189703857060522,
+    "median_prob_drop": 0.00027444958686828613,
+    "fraction_flipped": 0.0
+  }
+]

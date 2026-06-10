@@ -1,0 +1,22 @@
+[
+  {
+    "label": "meaningful",
+    "class": "Schwannoma",
+    "find": "schwannoma",
+    "replace": "glioma",
+    "n_positives": 111,
+    "mean_prob_drop": 0.0013144885888323188,
+    "median_prob_drop": 0.0003578066825866699,
+    "fraction_flipped": 0.0
+  },
+  {
+    "label": "control",
+    "class": "Schwannoma",
+    "find": "Extra-axial",
+    "replace": "Intra-axial",
+    "n_positives": 111,
+    "mean_prob_drop": 0.0001393156562699005,
+    "median_prob_drop": 2.9027462005615234e-05,
+    "fraction_flipped": 0.0
+  }
+]
