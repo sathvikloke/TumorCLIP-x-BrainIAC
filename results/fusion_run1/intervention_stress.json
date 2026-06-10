@@ -1,0 +1,22 @@
+[
+  {
+    "label": "meaningful",
+    "class": "Glioma",
+    "find": "glioma",
+    "replace": "schwannoma",
+    "n_positives": 298,
+    "mean_prob_drop": 0.005853057373315096,
+    "median_prob_drop": 0.004285305738449097,
+    "fraction_flipped": 0.006711409395973154
+  },
+  {
+    "label": "control",
+    "class": "Glioma",
+    "find": "Ring-enhancing",
+    "replace": "Non-enhancing",
+    "n_positives": 298,
+    "mean_prob_drop": 2.5075154553633183e-05,
+    "median_prob_drop": 1.811981201171875e-05,
+    "fraction_flipped": 0.0
+  }
+]

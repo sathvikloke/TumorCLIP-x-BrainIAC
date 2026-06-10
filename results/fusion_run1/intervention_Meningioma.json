@@ -1,0 +1,22 @@
+[
+  {
+    "label": "meaningful",
+    "class": "Meningioma",
+    "find": "meningioma",
+    "replace": "glioma",
+    "n_positives": 300,
+    "mean_prob_drop": 0.0017046669963747263,
+    "median_prob_drop": 0.0009552240371704102,
+    "fraction_flipped": 0.0
+  },
+  {
+    "label": "control",
+    "class": "Meningioma",
+    "find": "consistent",
+    "replace": "associated",
+    "n_positives": 300,
+    "mean_prob_drop": 0.00020863593090325594,
+    "median_prob_drop": 7.745623588562012e-05,
+    "fraction_flipped": 0.0
+  }
+]

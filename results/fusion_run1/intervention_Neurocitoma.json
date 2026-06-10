@@ -1,0 +1,22 @@
+[
+  {
+    "label": "meaningful",
+    "class": "Neurocitoma",
+    "find": "neurocytoma",
+    "replace": "schwannoma",
+    "n_positives": 134,
+    "mean_prob_drop": 0.0005417490610852838,
+    "median_prob_drop": 4.1425228118896484e-05,
+    "fraction_flipped": 0.0
+  },
+  {
+    "label": "control",
+    "class": "Neurocitoma",
+    "find": "Intraventricular",
+    "replace": "Extra-axial",
+    "n_positives": 134,
+    "mean_prob_drop": 0.0009490129305049777,
+    "median_prob_drop": 0.0001125037670135498,
+    "fraction_flipped": 0.0
+  }
+]

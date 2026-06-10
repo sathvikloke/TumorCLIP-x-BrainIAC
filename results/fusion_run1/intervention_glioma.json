@@ -1,0 +1,22 @@
+[
+  {
+    "label": "meaningful",
+    "class": "Glioma",
+    "find": "Ring-enhancing",
+    "replace": "Non-enhancing",
+    "n_positives": 298,
+    "mean_prob_drop": 2.5075154553633183e-05,
+    "median_prob_drop": 1.811981201171875e-05,
+    "fraction_flipped": 0.0
+  },
+  {
+    "label": "control",
+    "class": "Glioma",
+    "find": "showing",
+    "replace": "displaying",
+    "n_positives": 298,
+    "mean_prob_drop": 0.00012099392915843055,
+    "median_prob_drop": 8.958578109741211e-05,
+    "fraction_flipped": 0.0
+  }
+]
