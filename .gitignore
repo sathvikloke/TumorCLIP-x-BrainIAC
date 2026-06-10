@@ -1,4 +1,18 @@
-best_models/
+# Model weights and checkpoints
+weights/
+*.ckpt
 *.pt
 *.pth
+
+# Data (re-downloadable from Kaggle)
+data/
+data_raw/
+*.zip
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# System
 .DS_Store
