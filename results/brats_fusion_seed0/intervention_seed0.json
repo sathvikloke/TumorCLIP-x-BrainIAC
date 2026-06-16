@@ -1,0 +1,86 @@
+{
+  "baseline_accuracy": 0.605,
+  "per_class_true_positives": {
+    "Quiescent (minimal active disease)": 83,
+    "Enhancing without necrosis": 15,
+    "Necrotic enhancing (ring-enhancing)": 23
+  },
+  "n_test_cases": 200,
+  "edits": [
+    {
+      "class": "Quiescent (minimal active disease)",
+      "edit_label": "meaningful",
+      "find": "stable",
+      "replace": "unstable",
+      "n_positives": 83,
+      "mean_prob_drop": 0.0003048432990908623,
+      "median_prob_drop": 0.0003737807273864746,
+      "std_prob_drop": 0.00018257531337440014,
+      "fraction_flipped": 0.0,
+      "explanation": "Flip 'stable resection cavity' to 'unstable' (should push toward an active-disease class)."
+    },
+    {
+      "class": "Quiescent (minimal active disease)",
+      "edit_label": "control",
+      "find": "Post-operative",
+      "replace": "Postoperative",
+      "n_positives": 83,
+      "mean_prob_drop": -0.0001590707979630679,
+      "median_prob_drop": -0.0001709461212158203,
+      "std_prob_drop": 0.00010603327973512933,
+      "fraction_flipped": 0.0,
+      "explanation": "Remove the hyphen \u2014 same meaning, surface-level edit."
+    },
+    {
+      "class": "Enhancing without necrosis",
+      "edit_label": "meaningful",
+      "find": "enhancing",
+      "replace": "non-enhancing",
+      "n_positives": 15,
+      "mean_prob_drop": 0.00025744439335539937,
+      "median_prob_drop": 0.000335693359375,
+      "std_prob_drop": 0.000162729702424258,
+      "fraction_flipped": 0.0,
+      "explanation": "Negate the discriminating clinical feature; should push toward Quiescent."
+    },
+    {
+      "class": "Enhancing without necrosis",
+      "edit_label": "control",
+      "find": "Nodular",
+      "replace": "Focal",
+      "n_positives": 15,
+      "mean_prob_drop": 0.00038510363083332777,
+      "median_prob_drop": 0.0006019175052642822,
+      "std_prob_drop": 0.00035184677108190954,
+      "fraction_flipped": 0.0,
+      "explanation": "Clinical synonym \u2014 same anatomical descriptor."
+    },
+    {
+      "class": "Necrotic enhancing (ring-enhancing)",
+      "edit_label": "meaningful",
+      "find": "necrotic",
+      "replace": "cystic",
+      "n_positives": 23,
+      "mean_prob_drop": 0.0013424819335341454,
+      "median_prob_drop": 0.0013534724712371826,
+      "std_prob_drop": 5.9569592849584296e-05,
+      "fraction_flipped": 0.0,
+      "explanation": "Replace 'necrotic' with 'cystic' \u2014 clinically distinct fluid-filled appearance, should reduce high-grade signal."
+    },
+    {
+      "class": "Necrotic enhancing (ring-enhancing)",
+      "edit_label": "control",
+      "find": "Aggressive",
+      "replace": "Invasive",
+      "n_positives": 23,
+      "mean_prob_drop": 0.000386225146939978,
+      "median_prob_drop": 0.00043082237243652344,
+      "std_prob_drop": 9.681705705588683e-05,
+      "fraction_flipped": 0.0,
+      "explanation": "Synonym in glioma reporting \u2014 both describe spread, no change in clinical signal."
+    }
+  ],
+  "checkpoint": "results/brats_fusion_seed0/best.pt",
+  "split": "test",
+  "modality": "t2f"
+}
